@@ -24,12 +24,13 @@
         <section id="clients" class="module hidden">
             <h2>Clients</h2>
             <form id="client-form">
+                <input type="hidden" id="client-id">
                 <input type="text" id="client-nom" placeholder="Nom" required>
                 <input type="tel" id="client-tel" placeholder="Téléphone" required>
-                <input type="text" id="client-adresse" placeholder="Adresse" required>
+                <input type="text" id="client-vehicule" placeholder="Véhicule" required>
                 <input type="text" id="client-plaque" placeholder="Plaque" required>
-                <input type="text" id="client-cin" placeholder="CIN" required>
                 <button type="submit">Ajouter</button>
+                <button type="button" id="client-cancel" class="hidden">Annuler</button>
             </form>
             <ul id="client-list"></ul>
         </section>

@@ -31,6 +31,9 @@ form input, form select, form button {
     width: 100%;
     max-width: 400px;
 }
+#client-list button {
+    margin-left: 0.5em;
+}
 @media (min-width: 600px) {
     #menu {
         justify-content: space-around;
