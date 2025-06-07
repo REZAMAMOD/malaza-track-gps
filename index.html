@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaza Track</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Malaza Track</h1>
+        <nav>
+            <ul id="menu">
+                <li><a href="#" data-module="clients">Clients</a></li>
+                <li><a href="#" data-module="gps">GPS</a></li>
+                <li><a href="#" data-module="sim">Cartes SIM</a></li>
+                <li><a href="#" data-module="locations">Locations</a></li>
+                <li><a href="#" data-module="payments">Paiements</a></li>
+                <li><a href="#" data-module="caisse">Caisse</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="clients" class="module hidden">
+            <h2>Clients</h2>
+            <form id="client-form">
+                <input type="text" id="client-nom" placeholder="Nom" required>
+                <input type="tel" id="client-tel" placeholder="Téléphone" required>
+                <input type="text" id="client-adresse" placeholder="Adresse" required>
+                <input type="text" id="client-plaque" placeholder="Plaque" required>
+                <input type="text" id="client-cin" placeholder="CIN" required>
+                <button type="submit">Ajouter</button>
+            </form>
+            <ul id="client-list"></ul>
+        </section>
+        <section id="gps" class="module hidden">
+            <h2>GPS</h2>
+            <form id="gps-form">
+                <input type="text" id="gps-modele" placeholder="Modèle" required>
+                <input type="text" id="gps-imei" placeholder="IMEI" pattern="\d{15}" required>
+                <select id="gps-statut">
+                    <option value="disponible">Disponible</option>
+                    <option value="loue">Loué</option>
+                    <option value="maintenance">En maintenance</option>
+                </select>
+                <button type="submit">Ajouter</button>
+            </form>
+            <ul id="gps-list"></ul>
+        </section>
+        <section id="sim" class="module hidden">
+            <h2>Cartes SIM</h2>
+            <form id="sim-form">
+                <input type="text" id="sim-num" placeholder="Numéro" required>
+                <input type="text" id="sim-operateur" placeholder="Opérateur" required>
+                <input type="date" id="sim-validite" required>
+                <select id="sim-statut">
+                    <option value="active">Active</option>
+                    <option value="invalide">Invalide</option>
+                </select>
+                <button type="submit">Ajouter</button>
+            </form>
+            <ul id="sim-list"></ul>
+        </section>
+        <section id="locations" class="module hidden">
+            <h2>Locations</h2>
+            <form id="location-form">
+                <input type="text" id="location-client" placeholder="ID Client" required>
+                <input type="text" id="location-gps" placeholder="ID GPS" required>
+                <input type="text" id="location-sim" placeholder="ID SIM" required>
+                <input type="date" id="location-debut" required>
+                <button type="submit">Ajouter</button>
+            </form>
+            <ul id="location-list"></ul>
+        </section>
+        <section id="payments" class="module hidden">
+            <h2>Paiements</h2>
+            <form id="payment-form">
+                <input type="text" id="payment-location" placeholder="ID Location" required>
+                <input type="number" id="payment-montant" placeholder="Montant" required>
+                <select id="payment-methode">
+                    <option value="especes">Espèces</option>
+                    <option value="mvola">MVola</option>
+                </select>
+                <button type="submit">Ajouter</button>
+            </form>
+            <ul id="payment-list"></ul>
+        </section>
+        <section id="caisse" class="module hidden">
+            <h2>Caisse</h2>
+            <p>Fonctionnalités à venir...</p>
+        </section>
+    </main>
+
+    <script src="pouchdb.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
