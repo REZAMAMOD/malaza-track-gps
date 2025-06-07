@@ -32,35 +32,67 @@
     // Clients
     const clientForm = document.getElementById('client-form');
     const clientList = document.getElementById('client-list');
+    const cancelBtn = document.getElementById('client-cancel');
+    let editingClient = null;
 
     clientForm.addEventListener('submit', async e => {
         e.preventDefault();
         const doc = {
-            _id: uuid(),
             nom: clientForm['client-nom'].value.trim(),
             tel: clientForm['client-tel'].value.trim(),
-            adresse: clientForm['client-adresse'].value.trim(),
-            plaque: clientForm['client-plaque'].value.trim(),
-            cin: clientForm['client-cin'].value.trim()
+            vehicule: clientForm['client-vehicule'].value.trim(),
+            plaque: clientForm['client-plaque'].value.trim()
         };
         try {
+            if (editingClient) {
+                doc._id = editingClient._id;
+                doc._rev = editingClient._rev;
+            } else {
+                doc._id = uuid();
+            }
             await db.clients.put(doc);
-            clientForm.reset();
+            cancelEdit();
             loadClients();
         } catch (err) {
-            alert('Erreur lors de l\'ajout');
+            alert('Erreur lors de l\'enregistrement du client');
         }
     });
+
+    cancelBtn.addEventListener('click', cancelEdit);
+
+    function cancelEdit() {
+        editingClient = null;
+        clientForm.reset();
+        clientForm.querySelector('button[type="submit"]').textContent = 'Ajouter';
+        cancelBtn.classList.add('hidden');
+    }
 
     async function loadClients() {
         const result = await db.clients.allDocs({ include_docs: true });
         clientList.innerHTML = '';
         result.rows.forEach(row => {
             const li = document.createElement('li');
-            li.textContent = row.doc.nom + ' - ' + row.doc.tel;
-            li.addEventListener('click', () => deleteClient(row.doc));
+            li.textContent = row.doc.nom + ' - ' + row.doc.tel + ' - ' + row.doc.vehicule + ' - ' + row.doc.plaque;
+            const edit = document.createElement('button');
+            edit.textContent = 'Modifier';
+            edit.addEventListener('click', () => editClient(row.doc));
+            const del = document.createElement('button');
+            del.textContent = 'Supprimer';
+            del.addEventListener('click', () => deleteClient(row.doc));
+            li.appendChild(edit);
+            li.appendChild(del);
             clientList.appendChild(li);
         });
+    }
+
+    function editClient(doc) {
+        editingClient = doc;
+        clientForm['client-nom'].value = doc.nom;
+        clientForm['client-tel'].value = doc.tel;
+        clientForm['client-vehicule'].value = doc.vehicule;
+        clientForm['client-plaque'].value = doc.plaque;
+        clientForm.querySelector('button[type="submit"]').textContent = 'Modifier';
+        cancelBtn.classList.remove('hidden');
     }
 
     async function deleteClient(doc) {
